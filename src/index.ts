@@ -64,11 +64,6 @@ ctx2D.prototype.blur = function (strength = 1) {
 
 
 
-
-
-
-
-
 export type Theme = {
     color: string | Gradient;
     image: string | Buffer;
