@@ -81,9 +81,9 @@ export class Gradient {
         const arr = colors ?? [];
         this.colors = [];
         for (const stop of arr) {
-            if (stop['offset']) {
+            if (typeof stop['offset'] === 'number') {
                 this.colors.push(stop as any);
-            } else if (stop['off']) {
+            } else if (typeof stop['off'] === 'number') {
                 this.colors.push({
                     offset: stop['off'],
                     color: stop['col']
