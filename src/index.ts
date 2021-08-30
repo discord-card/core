@@ -70,14 +70,31 @@ export type Theme = {
     font?: string;
 }
 
+type GradientStop = { offset: number; color: string; } | { off: number; col: string; } | [number | string];
 export class Gradient {
     type: 'linear' | 'radial';
     colors: { offset: number; color: string; }[];
     grad: CanvasGradient;
 
-    constructor(type: 'linear' | 'radial' = 'linear', ...colors: { offset: number; color: string; }[]) {
+    constructor(type: 'linear' | 'radial' = 'linear', ...colors: GradientStop[]) {
         this.type = type;
-        this.colors = colors ?? [];
+        const arr = colors ?? [];
+        this.colors = [];
+        for (const stop of arr) {
+            if (stop['offset']) {
+                this.colors.push(stop as any);
+            } else if (stop['off']) {
+                this.colors.push({
+                    offset: stop['off'],
+                    color: stop['col']
+                });
+            } else {
+                this.colors.push({
+                    offset: stop[0],
+                    color: stop[1]
+                });
+            }
+        }
     }
 
     addColorStop(offset: number, color: string) {
