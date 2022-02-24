@@ -1,5 +1,4 @@
 import { CanvasRenderingContext2D as ctx2D } from 'canvas';
-import { join } from 'path';
 import { Gradient } from './gradient';
 
 declare global {
@@ -31,14 +30,15 @@ ctx2D.prototype.roundRect = function (x, y, w, h, r) {
 };
 
 ctx2D.prototype.changeFont = function (font) {
-  var fontArgs = this.font.split(' ');
-  this.font = fontArgs[0] + ' ' + font; /// using the first part
+  const fontArgs = this.font.split(' ');
+  let size = fontArgs[0] ?? '15px';
+  this.font = `${size} ${font}, SegoeUI, SegoeUIEmoji`; /// using the first part
   return this;
 };
 
 ctx2D.prototype.changeFontSize = function (size) {
-  var fontArgs = this.font.split(' ');
-  this.font = size + ' ' + fontArgs.slice(1).join(' '); /// using the last part
+  const fontArgs = this.font.split(' ');
+  this.font = `${size} ${fontArgs.slice(1).join(' ')}`; /// using the last part
   return this;
 };
 
