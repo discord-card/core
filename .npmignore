@@ -1,14 +1,16 @@
-# Folders
-node_modules
-testing
-.vscode
-
-# Only important for git
+# Only important for git repo
 examples
+USAGE.md
 
 #Developement
-*.map
+node_modules/
+test/
+.vscode/
+src/**/*.ts
 *.tgz
+*.map
+.prettierrc
+tsconfig.tsbuildinfo
 
 package-lock.json
 tsconfig.json
@@ -16,3 +18,4 @@ tsconfig.json
 #Git
 .gitignore
 .gitattributes
+.github
