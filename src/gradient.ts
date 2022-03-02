@@ -32,7 +32,9 @@ export abstract class Gradient {
     this.colors.push({ offset, color });
   }
 
-  abstract toString(ctx: ctx2D): CanvasGradient;
+  public abstract toString(ctx: ctx2D): CanvasGradient;
+  public abstract toString(ctx: ctx2D, x: number, y: number): CanvasGradient;
+  public abstract toString(ctx: ctx2D, x: number, y: number, w: number, h: number): CanvasGradient;
 }
 
 export class LinearGradient extends Gradient {
@@ -42,12 +44,9 @@ export class LinearGradient extends Gradient {
     super('linear', ...colors);
   }
 
-  toString(ctX: ctx2D): CanvasGradient;
-  toString(ctx: ctx2D, x: number, y: number): CanvasGradient;
-  toString(ctx: ctx2D, x: number, y: number, w: number, h: number): CanvasGradient;
   toString(ctx: ctx2D, xPos?: number, yPos?: number, width?: number, height?: number) {
-    const cW = ctx.canvas.width,
-      cH = ctx.canvas.height;
+    const cW = ctx.w,
+      cH = ctx.h;
 
     let grad: CanvasGradient;
     if (xPos && yPos) {
@@ -73,15 +72,38 @@ export class RadialGradient extends Gradient {
     super('radial', ...colors);
   }
 
-  toString(ctX: ctx2D): CanvasGradient;
-  toString(ctx: ctx2D, x: number, y: number, r: number): CanvasGradient;
-  toString(ctx: ctx2D, xPos?: number, yPos?: number, radius?: number) {
-    const cW = ctx.canvas.width,
-      cH = ctx.canvas.height;
+  toString(ctx: ctx2D, xPos?: number, yPos?: number, width?: number, height?: number) {
+    const cW = ctx.w,
+      cH = ctx.h;
 
+    let radius: number;
     let grad: CanvasGradient;
-    if (xPos && yPos && radius) {
-      grad = ctx.createRadialGradient(xPos, yPos, radius, xPos, yPos, radius);
+
+    if (xPos && yPos) {
+      if (width && height) {
+        let x0 = xPos,
+          y0 = yPos,
+          r0: number,
+          x1 = xPos + width,
+          y1 = yPos + height,
+          r1: number;
+
+        if (width > height) {
+          r0 = r1 = height / 2;
+        } else {
+          r0 = r1 = width / 2;
+        }
+
+        x0 += r0;
+        y0 += r0;
+        x1 -= r0;
+        y1 -= r0;
+
+        grad = ctx.createRadialGradient(x0, y0, r0, x1, y1, r1);
+      } else {
+        radius = ctx.h / 2;
+        grad = ctx.createRadialGradient(xPos, yPos, radius, xPos, yPos, radius);
+      }
     } else {
       grad = ctx.createRadialGradient(cW / 2, cH / 2, cW / 2, cW / 2, cH / 2, cW / 2);
     }
@@ -99,13 +121,11 @@ export class ConicGradient extends Gradient {
     super('conic', ...colors);
   }
 
-  toString(ctX: ctx2D): CanvasGradient;
-  toString(ctx: ctx2D, startAngle: number, x: number, y: number): CanvasGradient;
-  toString(ctx: ctx2D, startAngle?: number, x?: number, y?: number) {
+  toString(ctx: ctx2D, xPos?: number, yPos?: number, width?: number, height?: number) {
     let grad: CanvasGradient;
-    if (startAngle && x && y) {
+    if (xPos && yPos) {
       //@ts-ignore
-      grad = ctx.createConicGradient(startAngle, x, y);
+      grad = ctx.createConicGradient(startAngle, xPos, yPos);
     } else {
       //@ts-ignore
       grad = ctx.createConicGradient(0, 0, 0);
