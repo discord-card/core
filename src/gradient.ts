@@ -104,8 +104,10 @@ export class ConicGradient extends Gradient {
   toString(ctx: ctx2D, startAngle?: number, x?: number, y?: number) {
     let grad: CanvasGradient;
     if (startAngle && x && y) {
+      //@ts-ignore
       grad = ctx.createConicGradient(startAngle, x, y);
     } else {
+      //@ts-ignore
       grad = ctx.createConicGradient(0, 0, 0);
     }
 
