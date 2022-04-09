@@ -1,5 +1,4 @@
 import { CanvasRenderingContext2D as ctx2D } from 'canvas';
-import { Gradient } from './gradient';
 
 declare global {
   interface CanvasRenderingContext2D {
@@ -62,11 +61,6 @@ ctx2D.prototype.blur = function (strength = 1) {
   return this;
 };
 
-export type Theme = {
-  color: string | Gradient;
-  image: string | Buffer;
-  font?: string;
-};
-
 import './fonts';
+import { Theme } from './types';
 export * from './gradient';
