@@ -12,7 +12,7 @@ export interface GuildMemberLike {
 }
 
 export type Style = string | CanvasGradient | CanvasPattern;
-export type ColorResolvable = `#${string}` | Gradient;
+export type ColorResolvable = string | Gradient;
 export type ImageResolvable = Canvas | Image | Buffer | string;
 
 export type Theme = {
@@ -20,7 +20,6 @@ export type Theme = {
   image: ImageResolvable;
   font?: string;
 };
-
 
 declare global {
   interface CanvasRenderingContext2D {
