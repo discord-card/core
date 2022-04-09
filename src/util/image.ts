@@ -1,4 +1,5 @@
-import { Canvas, loadImage, Image } from 'canvas';
+import { Canvas, Image } from '@napi-rs/canvas';
+import axios from 'axios';
 import { ImageResolvable } from '../types';
 
 export function getFontSize(str: string) {
@@ -6,12 +7,27 @@ export function getFontSize(str: string) {
   return (600 * Math.pow(str.length, -1.05)).toFixed(0);
 }
 
+export async function loadImage(url: string): Promise<Image> {
+  const response = await axios.get(url, {
+    responseType: 'arraybuffer',
+  });
+  const buffer = Buffer.from(response.data, 'binary');
+
+  let img = new Image();
+  img.src = buffer;
+  return img;
+}
+
 export async function toImage(image: ImageResolvable, name?: string): Promise<Image> {
   if (image instanceof Canvas) {
     let img = new Image();
-    img.src = (image as Canvas).toDataURL();
+    img.src = (image as Canvas).data();
     return img;
   } else if (image instanceof Image) return image;
-  else if (typeof image === 'string' || image instanceof Buffer) return await loadImage(image);
+  else if (image instanceof Buffer) {
+    let img = new Image();
+    img.src = image;
+    return img;
+  } else if (typeof image === 'string') return await loadImage(image);
   else throw new Error('Invalid Image Format for: ' + name ?? 'Image');
 }
