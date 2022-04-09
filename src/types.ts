@@ -19,3 +19,18 @@ export type Theme = {
   image: ImageResolvable;
   font?: string;
 };
+
+declare global {
+  interface CanvasRenderingContext2D {
+    width: number;
+    w: number;
+    height: number;
+    h: number;
+    theme: Theme;
+
+    roundRect(x: number, y: number, w: number, h: number, r: number): this;
+    changeFont(font: string): this;
+    changeFontSize(size: string): this;
+    blur(strength: number): this;
+  }
+}
