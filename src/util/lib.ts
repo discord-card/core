@@ -46,7 +46,3 @@ export function blur(ctx: ctx2D, strength = 1): ctx2D {
   return ctx;
 }
 
-export function getFontSize(str: string) {
-  if (str.length < 18) return 30;
-  return (600 * Math.pow(str.length, -1.05)).toFixed(0);
-}
