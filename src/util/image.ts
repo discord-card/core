@@ -1,4 +1,4 @@
-import { Canvas, loadImage } from 'canvas';
+import { Canvas, loadImage, Image } from 'canvas';
 import { ImageResolvable } from '../types';
 
 export function getFontSize(str: string) {
@@ -6,7 +6,7 @@ export function getFontSize(str: string) {
   return (600 * Math.pow(str.length, -1.05)).toFixed(0);
 }
 
-export async function toImage(image: ImageResolvable, name?: string) {
+export async function toImage(image: ImageResolvable, name?: string): Promise<Image> {
   if (image instanceof Canvas) {
     let img = new Image();
     img.src = (image as Canvas).toDataURL();
