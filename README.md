@@ -6,8 +6,9 @@
 
 The Core functionallity for all discord-car repositorys
 
-| name       | children   | size   |
-| ---------- | ---------- | ------ |
-| canvas     | 0          | 56.73M |
-| canvas-txt | 0          | 0.01M  |
-| 2 modules  | 0 children | 56.74M |
+| name            | children   | size   |
+| --------------- | ---------- | ------ |
+| axios           | 0          | 0.38M  |
+| @napi-rs/canvas | 0          | 0.08M  |
+| canvas-txt      | 0          | 0.01M  |
+| 2 modules       | 0 children | 56.74M |
