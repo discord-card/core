@@ -1,5 +1,5 @@
 import { Canvas, CanvasRenderingContext2D as ctx2D, loadImage } from 'canvas';
-import { ImageResolvable } from './types';
+import { ImageResolvable } from '../types';
 
 export function roundRect(x: number, y: number, w: number, h: number, r: number): ctx2D {
   if (w < 2 * r) r = w / 2;
