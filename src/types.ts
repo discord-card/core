@@ -22,7 +22,7 @@ export type Theme = {
 };
 
 declare global {
-  interface CanvasRenderingContext2D {
+  interface SKRSContext2D {
     width: number;
     w: number;
     height: number;

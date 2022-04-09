@@ -1,5 +1,5 @@
 import { Gradient, GradientStop } from '.';
-import { CanvasRenderingContext2D as ctx2D, CanvasGradient } from '@napi-rs/canvas';
+import { SKRSContext2D as ctx2D } from '@napi-rs/canvas';
 
 export class LinearGradient extends Gradient {
   type: 'linear';
@@ -9,8 +9,8 @@ export class LinearGradient extends Gradient {
   }
 
   toString(ctx: ctx2D, xPos?: number, yPos?: number, width?: number, height?: number) {
-    const cW = ctx.w,
-      cH = ctx.h;
+    const cW = ctx.canvas.width,
+      cH = ctx.canvas.height;
 
     let grad: CanvasGradient;
     if (xPos && yPos) {

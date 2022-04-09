@@ -1,7 +1,8 @@
 import { Gradient } from '../gradient';
 import { Style } from '../types';
-import { CanvasRenderingContext2D as ctx2D } from '@napi-rs/canvas';
+import { SKRSContext2D as ctx2D } from '@napi-rs/canvas';
 import canvasTXT from 'canvas-txt';
+import { changeFont, changeFontSize } from './lib';
 
 export interface MultilineOptions {
   width?: number;
@@ -66,6 +67,9 @@ export class Text {
       })
     );
 
+    const w = ctx.canvas.width,
+      h = ctx.canvas.height;
+
     if (this.x < 1 && this.y < 1) {
       this.x *= ctx.canvas.width;
       this.y *= ctx.canvas.height;
@@ -78,28 +82,28 @@ export class Text {
     }
 
     if (this.gradient) {
-      const grad = this.gradient.toString(ctx, this.x, this.y, maxWidth ?? ctx.w - this.x, ctx.h - this.y);
+      const grad = this.gradient.toString(ctx, this.x, this.y, maxWidth ?? w - this.x, h - this.y);
       ctx.fillStyle = grad;
       ctx.strokeStyle = grad;
     }
 
-    if (this.font) ctx.changeFont(this.font);
-    if (this.fontSize) ctx.changeFontSize(this.fontSize + 'px');
+    if (this.font) changeFont(ctx, this.font);
+    if (this.fontSize) changeFontSize(ctx, this.fontSize + 'px');
 
-    let maxW: number = maxWidth ?? ctx.w - this.x;
+    let maxW: number = maxWidth ?? w - this.x;
 
     if (!!this.multilineOpts) {
-      let w = this.multilineOpts.width ?? ctx.canvas.width - this.x,
-        h = this.multilineOpts.height ?? ctx.canvas.height - this.y;
+      let boxW = this.multilineOpts.width ?? ctx.canvas.width - this.x,
+        boxH = this.multilineOpts.height ?? ctx.canvas.height - this.y;
 
-      const grad = this.gradient.toString(ctx, this.x, this.y, w, h);
+      const grad = this.gradient.toString(ctx, this.x, this.y, boxW, boxH);
       ctx.fillStyle = grad;
       ctx.strokeStyle = grad;
 
       canvasTXT.lineHeight = this.multilineOpts.lineHeight ?? null;
       canvasTXT.align = this.textAlign;
       canvasTXT.fontSize = this.fontSize;
-      canvasTXT.drawText(ctx as any, this.text, this.x, this.y, w, h);
+      canvasTXT.drawText(ctx as any, this.text, this.x, this.y, boxW, boxH);
     } else {
       if (this.strokeOn) {
         ctx.strokeText(this.text, this.x, this.y, maxW);
