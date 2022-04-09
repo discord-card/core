@@ -1,4 +1,4 @@
-import { Canvas, Image } from 'canvas';
+import { Canvas, Image, CanvasRenderingContext2D as ctx2D } from 'canvas';
 import { Gradient } from './gradient';
 
 export interface GuildMemberLike {
@@ -11,6 +11,7 @@ export interface GuildMemberLike {
   };
 }
 
+export type Style = string | CanvasGradient | CanvasPattern;
 export type ColorResolvable = `#${string}` | Gradient;
 export type ImageResolvable = Canvas | Image | Buffer | string;
 
@@ -19,6 +20,7 @@ export type Theme = {
   image: ImageResolvable;
   font?: string;
 };
+
 
 declare global {
   interface CanvasRenderingContext2D {
@@ -34,3 +36,20 @@ declare global {
     blur(strength: number): this;
   }
 }
+
+interface Options {
+  rect?: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
+  font?: string;
+  stroke?: boolean;
+  verbose?: boolean;
+  lineHeight?: number;
+  minFontSize?: number;
+  maxFontSize?: number;
+}
+
+declare function drawMultilineText(ctx: CanvasRenderingContext2D | ctx2D, text: string, opts?: Options): number;
