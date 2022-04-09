@@ -1,6 +1,7 @@
 {
   "name": "@discord-card/skia-core",
   "version": "0.0.1",
+  "private": false,
   "description": "Discord Card skia core",
   "main": "lib/index.js",
   "types": "typings/index.d.ts",
