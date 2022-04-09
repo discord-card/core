@@ -1,4 +1,4 @@
-import { Canvas, Image, CanvasRenderingContext2D as ctx2D } from 'canvas';
+import { Canvas, Image, SKRSContext2D as ctx2D } from '@napi-rs/canvas';
 import { Gradient } from './gradient';
 
 export interface GuildMemberLike {
@@ -35,20 +35,3 @@ declare global {
     blur(strength: number): this;
   }
 }
-
-interface Options {
-  rect?: {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-  };
-  font?: string;
-  stroke?: boolean;
-  verbose?: boolean;
-  lineHeight?: number;
-  minFontSize?: number;
-  maxFontSize?: number;
-}
-
-declare function drawMultilineText(ctx: CanvasRenderingContext2D | ctx2D, text: string, opts?: Options): number;

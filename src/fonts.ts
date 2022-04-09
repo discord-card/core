@@ -1,4 +1,4 @@
-import { registerFont } from 'canvas';
+import { registerFont } from '@napi-rs/canvas';
 import { join } from 'path';
 
 function path(...paths: string[]) {

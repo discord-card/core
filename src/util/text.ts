@@ -1,6 +1,6 @@
 import { Gradient } from '../gradient';
 import { Style } from '../types';
-import { CanvasRenderingContext2D as ctx2D } from 'canvas';
+import { CanvasRenderingContext2D as ctx2D } from '@napi-rs/canvas';
 import canvasTXT from 'canvas-txt';
 
 export interface MultilineOptions {

@@ -1,4 +1,4 @@
-import { CanvasRenderingContext2D as ctx2D, CanvasGradient } from 'canvas';
+import { CanvasRenderingContext2D as ctx2D, CanvasGradient } from '@napi-rs/canvas';
 
 export type GradientType = 'linear' | 'radial' | 'conic';
 export type GradientStop = { offset: number; color: string } | { off: number; col: string } | [number | string];

@@ -1,4 +1,4 @@
-import { CanvasRenderingContext2D as ctx2D } from 'canvas';
+import { CanvasRenderingContext2D as ctx2D } from '@napi-rs/canvas';
 import { roundRect, changeFont, changeFontSize, blur } from '../util/lib';
 
 ctx2D.prototype.roundRect = roundRect;
