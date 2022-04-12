@@ -18,7 +18,7 @@ export class Timer {
   public step(name?: string) {
     const diff = this.diff();
     if (name) {
-      console.log(this.name, '-', ''.padStart(4 - (diff + '').length), diff, 'ms', name, ':');
+      console.log(this.name, ''.padStart(4 - (diff + '').length), '-', diff, 'ms', name);
     } else {
       console.log(this.name, ':', diff, 'ms');
     }
