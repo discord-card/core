@@ -1,4 +1,4 @@
-import { SKRSContext2D as ctx2D } from '@napi-rs/canvas';
+import { ctx2D } from '../types';
 
 export type GradientType = 'linear' | 'radial' | 'conic';
 export type GradientStop = { offset: number; color: string } | { off: number; col: string } | [number | string];

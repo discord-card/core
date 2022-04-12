@@ -1,4 +1,4 @@
-import { Canvas, Image, SKRSContext2D as ctx2D } from '@napi-rs/canvas';
+import { Canvas, Image } from 'canvas';
 import { Gradient } from './gradient';
 
 export interface GuildMemberLike {
@@ -35,3 +35,5 @@ declare global {
     blur(strength: number): this;
   }
 }
+
+export { CanvasRenderingContext2D as ctx2D } from 'canvas';

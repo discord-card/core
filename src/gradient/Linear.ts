@@ -1,5 +1,5 @@
 import { Gradient, GradientStop } from '.';
-import { SKRSContext2D as ctx2D } from '@napi-rs/canvas';
+import { ctx2D } from '../types';
 
 export class LinearGradient extends Gradient {
   type: 'linear';

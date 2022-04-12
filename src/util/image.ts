@@ -1,5 +1,5 @@
-import { Canvas, Image } from '@napi-rs/canvas';
-import axios from 'axios';
+import { Canvas, Image, loadImage } from 'canvas';
+//import axios from 'axios';
 import { ImageResolvable } from '../types';
 
 export function getFontSize(str: string) {
@@ -7,6 +7,7 @@ export function getFontSize(str: string) {
   return (600 * Math.pow(str.length, -1.05)).toFixed(0);
 }
 
+/*
 export async function loadImage(url: string): Promise<Image> {
   const response = await axios.get(url, {
     responseType: 'arraybuffer',
@@ -17,11 +18,12 @@ export async function loadImage(url: string): Promise<Image> {
   img.src = buffer;
   return img;
 }
+*/
 
 export async function toImage(image: ImageResolvable, name?: string): Promise<Image> {
   if (image instanceof Canvas) {
     let img = new Image();
-    img.src = (image as Canvas).data();
+    img.src = (image as Canvas).toDataURL();
     return img;
   } else if (image instanceof Image) return image;
   else if (image instanceof Buffer) {
