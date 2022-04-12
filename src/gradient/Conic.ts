@@ -1,5 +1,5 @@
 import { Gradient, GradientStop } from '.';
-import { CanvasRenderingContext2D as ctx2D, CanvasGradient } from 'canvas';
+import { ctx2D } from '../types';
 
 export class ConicGradient extends Gradient {
   type: 'conic';

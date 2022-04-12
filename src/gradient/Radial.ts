@@ -1,5 +1,5 @@
 import { Gradient, GradientStop } from '.';
-import { CanvasRenderingContext2D as ctx2D, CanvasGradient } from 'canvas';
+import { ctx2D } from '../types';
 
 export class RadialGradient extends Gradient {
   type: 'radial';
@@ -9,8 +9,8 @@ export class RadialGradient extends Gradient {
   }
 
   toString(ctx: ctx2D, xPos?: number, yPos?: number, width?: number, height?: number) {
-    const cW = ctx.w,
-      cH = ctx.h;
+    const cW = ctx.canvas.width,
+      cH = ctx.canvas.height;
 
     let radius: number;
     let grad: CanvasGradient;
@@ -37,7 +37,7 @@ export class RadialGradient extends Gradient {
 
         grad = ctx.createRadialGradient(x0, y0, r0, x1, y1, r1);
       } else {
-        radius = ctx.h / 2;
+        radius = ctx.canvas.height / 2;
         grad = ctx.createRadialGradient(xPos, yPos, radius, xPos, yPos, radius);
       }
     } else {

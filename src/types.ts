@@ -1,4 +1,4 @@
-import { Canvas, Image, CanvasRenderingContext2D as ctx2D } from 'canvas';
+import { Canvas, Image } from 'canvas';
 import { Gradient } from './gradient';
 
 export interface GuildMemberLike {
@@ -22,7 +22,7 @@ export type Theme = {
 };
 
 declare global {
-  interface CanvasRenderingContext2D {
+  interface SKRSContext2D {
     width: number;
     w: number;
     height: number;
@@ -36,19 +36,4 @@ declare global {
   }
 }
 
-interface Options {
-  rect?: {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-  };
-  font?: string;
-  stroke?: boolean;
-  verbose?: boolean;
-  lineHeight?: number;
-  minFontSize?: number;
-  maxFontSize?: number;
-}
-
-declare function drawMultilineText(ctx: CanvasRenderingContext2D | ctx2D, text: string, opts?: Options): number;
+export { CanvasRenderingContext2D as ctx2D } from 'canvas';
