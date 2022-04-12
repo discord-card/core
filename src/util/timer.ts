@@ -8,6 +8,7 @@ export class Timer {
   }
 
   public start() {
+    console.log(this.name, 'starting');
     this.startTime = new Date();
     this.lastTime = new Date();
     return this;
@@ -17,10 +18,11 @@ export class Timer {
   public step(name?: string): this;
   public step(name?: string) {
     const diff = this.diff();
+    const whitespace = ''.padStart(4 - (diff + '').length);
     if (name) {
-      console.log(this.name, ''.padStart(4 - (diff + '').length), '-', diff, 'ms', name);
+      console.log(whitespace, diff, 'ms', '-', name);
     } else {
-      console.log(this.name, ':', diff, 'ms');
+      console.log(whitespace, diff, 'ms');
     }
     this.lastTime = new Date();
     return this;
@@ -28,7 +30,7 @@ export class Timer {
 
   public stop() {
     const complete = new Date().getTime() - this.startTime.getTime();
-    console.log(this.name, 'took', ':', complete, 'ms');
+    console.log('Finished, took', ':', complete, 'ms');
   }
 
   private diff() {
