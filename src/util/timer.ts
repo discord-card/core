@@ -14,6 +14,7 @@ export class Timer {
   }
 
   public step(): this;
+  public step(name?: string): this;
   public step(name?: string) {
     const diff = this.diff();
     if (name) {
