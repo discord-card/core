@@ -4,15 +4,8 @@ import { SKRSContext2D as ctx2D } from '@napi-rs/canvas';
 import canvasTXT from 'canvas-txt';
 import { changeFont, changeFontSize } from './lib';
 
-export interface MultilineOptions {
-  width?: number;
-  height?: number;
-  lineHeight?: number;
-}
-
 export class Text {
-  public x: number;
-  public y: number;
+  public rect: { x: number; y: number; w: number; h: number };
   public text: string;
   public textAlign?: 'center' | 'left' | 'right';
   public style?: Style;
@@ -20,13 +13,13 @@ export class Text {
   public font?: string;
   /** Font size in px */
   public fontSize?: number;
-  private multilineOpts?: MultilineOptions;
+  private multilineOn: boolean;
   private strokeOn: boolean;
 
   constructor(text: string, posX: number, posY: number) {
     this.text = text;
-    this.x = posX;
-    this.y = posY;
+    this.rect = { x: posX, y: posY, w: 0, h: 0 };
+    this.multilineOn = false;
     this.strokeOn = false;
   }
 
@@ -52,63 +45,62 @@ export class Text {
     return this;
   }
 
-  public multiline(opts: MultilineOptions) {
-    this.multilineOpts = opts ?? {};
+  /** Set the width and height of this text   */
+  public setRect(w: number, h: number) {
+    this.rect.w = w;
+    this.rect.h = h;
     return this;
   }
 
-  public draw(ctx: ctx2D, maxWidth?: number) {
-    const before = JSON.parse(
-      JSON.stringify({
-        font: ctx.font,
-        textAlign: ctx.textAlign,
-        fillStyle: ctx.fillStyle,
-        strokeStyle: ctx.strokeStyle,
-      })
-    );
+  public multiline() {
+    this.multilineOn = !this.multilineOn;
+    return this;
+  }
 
-    const w = ctx.canvas.width,
-      h = ctx.canvas.height;
+  public draw(ctx: ctx2D) {
+    // Save before style
+    ctx.save();
 
-    if (this.x < 1 && this.y < 1) {
-      this.x *= ctx.canvas.width;
-      this.y *= ctx.canvas.height;
+    const canvasW = ctx.canvas.width,
+      canvasH = ctx.canvas.height;
+
+    if (this.rect.x < 1 && this.rect.y < 1) {
+      this.rect.x *= canvasW;
+      this.rect.y *= canvasH;
+    }
+    if (this.rect.w === 0) this.rect.w = canvasW - this.rect.x;
+    if (this.rect.h === 0) this.rect.h = canvasH - this.rect.h;
+
+    if (this.rect.w < 1 && this.rect.y < 1) {
+      this.rect.w *= canvasW;
+      this.rect.h *= canvasH;
     }
 
     if (this.textAlign) ctx.textAlign = this.textAlign;
+    if (this.gradient) {
+      this.style = this.gradient.toString(ctx, this.rect.x, this.rect.y, this.rect.w, this.rect.h);
+    }
     if (this.style) {
       ctx.fillStyle = this.style;
       ctx.strokeStyle = this.style;
     }
 
-    if (this.gradient) {
-      const grad = this.gradient.toString(ctx, this.x, this.y, maxWidth ?? w - this.x, h - this.y);
-      ctx.fillStyle = grad;
-      ctx.strokeStyle = grad;
-    }
-
     if (this.font) changeFont(ctx, this.font);
     if (this.fontSize) changeFontSize(ctx, this.fontSize + 'px');
 
-    let maxW: number = maxWidth ?? w - this.x;
-
-    if (!!this.multilineOpts) {
-      let boxW = this.multilineOpts.width ?? ctx.canvas.width - this.x,
-        boxH = this.multilineOpts.height ?? ctx.canvas.height - this.y;
-
-      const grad = this.gradient.toString(ctx, this.x, this.y, boxW, boxH);
-      ctx.fillStyle = grad;
-      ctx.strokeStyle = grad;
-
-      canvasTXT.lineHeight = this.multilineOpts.lineHeight ?? null;
+    if (this.multilineOn) {
       canvasTXT.align = this.textAlign;
       canvasTXT.fontSize = this.fontSize;
-      canvasTXT.drawText(ctx as any, this.text, this.x, this.y, boxW, boxH);
+      canvasTXT.drawText(ctx as any, this.text, this.rect.x, this.rect.y, this.rect.w, this.rect.h);
     } else {
       if (this.strokeOn) {
-        ctx.strokeText(this.text, this.x, this.y, maxW);
-      } else ctx.fillText(this.text, this.x, this.y, maxW);
+        ctx.strokeText(this.text, this.rect.x, this.rect.y, this.rect.w);
+      } else {
+        ctx.fillText(this.text, this.rect.x, this.rect.y, this.rect.w);
+      }
     }
-    Object.assign(ctx, before);
+
+    // Restore old style
+    ctx.restore();
   }
 }
