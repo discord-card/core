@@ -21,19 +21,4 @@ export type Theme = {
   font?: string;
 };
 
-declare global {
-  interface SKRSContext2D {
-    width: number;
-    w: number;
-    height: number;
-    h: number;
-    theme: Theme;
-
-    roundRect(x: number, y: number, w: number, h: number, r: number): this;
-    changeFont(font: string): this;
-    changeFontSize(size: string): this;
-    blur(strength: number): this;
-  }
-}
-
 export { CanvasRenderingContext2D as ctx2D } from 'canvas';
