@@ -1,4 +1,4 @@
-import { SKRSContext2D as ctx2D } from '@napi-rs/canvas';
+import { ctx2D } from '../types';
 
 export function roundRect(ctx: ctx2D, x: number, y: number, w: number, h: number, r: number): ctx2D {
   if (w < 2 * r) r = w / 2;
@@ -45,4 +45,3 @@ export function blur(ctx: ctx2D, strength = 1): ctx2D {
 
   return ctx;
 }
-

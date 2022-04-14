@@ -1,4 +1,5 @@
 import { GlobalFonts } from '@napi-rs/canvas';
+//import { registerFont } from 'canvas';
 import { join } from 'path';
 
 function path(...paths: string[]) {
@@ -7,3 +8,6 @@ function path(...paths: string[]) {
 
 GlobalFonts.registerFromPath(path('fonts/segoeui.ttf'), 'SegoeUI');
 GlobalFonts.registerFromPath(path('fonts/seguiemj.ttf'), 'SegoeUIEmoji');
+
+//registerFont(path('fonts/segoeui.ttf'), { family: 'SegoeUI' });
+//registerFont(path('fonts/seguiemj.ttf'), { family: 'SegoeUIEmoji' });

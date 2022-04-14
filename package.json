@@ -1,8 +1,8 @@
 {
-  "name": "@discord-card/skia-core",
-  "version": "0.1.4",
+  "name": "@discord-card/core",
+  "version": "3.0.1",
   "private": false,
-  "description": "Discord Card skia core",
+  "description": "Discord Card  core",
   "main": "lib/index.js",
   "types": "typings/index.d.ts",
   "scripts": {
@@ -15,7 +15,6 @@
   "keywords": [
     "discord",
     "canvas",
-    "skia",
     "card"
   ],
   "author": "discord-card",

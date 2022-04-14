@@ -1,6 +1,5 @@
 import { Gradient } from '../gradient';
-import { Style } from '../types';
-import { SKRSContext2D as ctx2D } from '@napi-rs/canvas';
+import { ctx2D, Style } from '../types';
 import canvasTXT from 'canvas-txt';
 import { changeFont, changeFontSize } from './lib';
 
