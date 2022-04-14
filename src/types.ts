@@ -1,4 +1,4 @@
-import { Canvas, Image } from 'canvas';
+import { Canvas, Image, SKRSContext2D as ctx2D } from '@napi-rs/canvas';
 import { Gradient } from './gradient';
 
 export interface GuildMemberLike {
@@ -21,4 +21,4 @@ export type Theme = {
   font?: string;
 };
 
-export { CanvasRenderingContext2D as ctx2D } from 'canvas';
+export { Canvas, Image, ctx2D };

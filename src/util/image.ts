@@ -1,6 +1,5 @@
-import { Canvas, Image } from 'canvas';
 import axios from 'axios';
-import { ImageResolvable } from '../types';
+import { ImageResolvable, Image, Canvas } from '../types';
 
 export function getFontSize(str: string) {
   if (str.length < 18) return 30;
@@ -22,7 +21,7 @@ export async function loadImage(url: string): Promise<Image> {
 export async function toImage(image: ImageResolvable, name?: string): Promise<Image> {
   if (image instanceof Canvas) {
     let img = new Image();
-    img.src = (image as Canvas).toBuffer();
+    img.src = (image as Canvas).toBuffer('image/png');
     return img;
   } else if (image instanceof Image) return image;
   else if (image instanceof Buffer) {
