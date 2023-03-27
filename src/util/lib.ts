@@ -1,3 +1,4 @@
+import { Canvas } from 'canvas';
 import { ctx2D } from '../types';
 
 export function roundRect(ctx: ctx2D, x: number, y: number, w: number, h: number, r: number): ctx2D {
@@ -26,22 +27,23 @@ export function changeFontSize(ctx: ctx2D, size: string): ctx2D {
   return ctx;
 }
 
-export function blur(ctx: ctx2D, strength = 1): ctx2D {
+export function blur(canvas: Canvas, strength = 1): Canvas {
+  let ctx = canvas.getContext('2d');
   ctx.globalAlpha = 0.5; // Higher alpha made it more smooth
   // Add blur layers by strength to x and y
   // 2 made it a bit faster without noticeable quality loss
   for (var y = -strength; y <= strength; y += 2) {
     for (var x = -strength; x <= strength; x += 2) {
       // Apply layers
-      ctx.drawImage(ctx.canvas as any, x, y);
+      ctx.drawImage(canvas, x, y);
       // Add an extra layer, prevents it from rendering lines
       // on top of the images (does makes it slower though)
       if (x >= 0 && y >= 0) {
-        ctx.drawImage(ctx.canvas as any, -(x - 1), -(y - 1));
+        ctx.drawImage(canvas, -(x - 1), -(y - 1));
       }
     }
   }
   ctx.globalAlpha = 1.0;
 
-  return ctx;
+  return canvas;
 }

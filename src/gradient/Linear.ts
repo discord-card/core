@@ -8,20 +8,8 @@ export class LinearGradient extends Gradient {
     super('linear', ...colors);
   }
 
-  toString(ctx: ctx2D, xPos?: number, yPos?: number, width?: number, height?: number) {
-    const cW = ctx.canvas.width,
-      cH = ctx.canvas.height;
-
-    let grad: CanvasGradient;
-    if (xPos && yPos) {
-      if (width && height) {
-        grad = ctx.createLinearGradient(xPos, yPos, xPos + width, yPos + height);
-      } else {
-        grad = ctx.createLinearGradient(xPos, yPos, cW - xPos, cH - yPos);
-      }
-    } else {
-      grad = ctx.createLinearGradient(0, 0, cW, cH);
-    }
+  toString(ctx: ctx2D, xPos: number, yPos: number, width: number, height: number) {
+    let grad = ctx.createLinearGradient(xPos, yPos, xPos + width, yPos + height);
 
     for (const v of this.colors) grad.addColorStop(v.offset, v.color);
 

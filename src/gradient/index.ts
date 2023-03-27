@@ -32,8 +32,8 @@ export abstract class Gradient {
     this.colors.push({ offset, color });
   }
 
-  public abstract toString(ctx: ctx2D): CanvasGradient;
-  public abstract toString(ctx: ctx2D, x: number, y: number): CanvasGradient;
+  // public abstract toString(ctx: ctx2D): CanvasGradient;
+  // public abstract toString(ctx: ctx2D, x: number, y: number): CanvasGradient;
   public abstract toString(ctx: ctx2D, x: number, y: number, w: number, h: number): CanvasGradient;
 }
 

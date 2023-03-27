@@ -60,6 +60,7 @@ export class Text {
     // Save before style
     ctx.save();
 
+    /*
     const canvasW = ctx.canvas.width,
       canvasH = ctx.canvas.height;
 
@@ -74,6 +75,7 @@ export class Text {
       this.rect.w *= canvasW;
       this.rect.h *= canvasH;
     }
+    */
 
     if (this.textAlign) ctx.textAlign = this.textAlign;
     if (this.gradient) {
