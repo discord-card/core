@@ -2,6 +2,7 @@ import { Gradient } from '../gradient';
 import { ctx2D, Style } from '../types';
 import canvasTXT from 'canvas-txt';
 import { changeFont, changeFontSize } from './lib';
+import { Canvas } from 'canvas';
 
 export class Text {
   public rect: { x: number; y: number; w: number; h: number };
@@ -56,13 +57,13 @@ export class Text {
     return this;
   }
 
-  public draw(ctx: ctx2D) {
+  public draw(canvas: Canvas) {
     // Save before style
+    let ctx = canvas.getContext('2d');
     ctx.save();
 
-    /*
-    const canvasW = ctx.canvas.width,
-      canvasH = ctx.canvas.height;
+    const canvasW = canvas.width,
+      canvasH = canvas.height;
 
     if (this.rect.x < 1 && this.rect.y < 1) {
       this.rect.x *= canvasW;
@@ -75,7 +76,6 @@ export class Text {
       this.rect.w *= canvasW;
       this.rect.h *= canvasH;
     }
-    */
 
     if (this.textAlign) ctx.textAlign = this.textAlign;
     if (this.gradient) {
