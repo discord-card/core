@@ -22,8 +22,7 @@
   "dependencies": {
     "axios": "^1.13.4",
     "canvas": "^3.0.0",
-    "canvas-txt": "^3.0.0",
-    "typescript": "^5.9.3"
+    "canvas-txt": "^3.0.0"
   },
   "peerDependencies": {
     "discord.js": "^13.17.1"
