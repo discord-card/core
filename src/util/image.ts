@@ -30,5 +30,5 @@ export async function toImage(image: ImageResolvable, name?: string): Promise<Im
     img.src = image;
     return img;
   } else if (typeof image === 'string') return await loadImage(image);
-  else throw new Error('Invalid Image Format for: ' + name ?? 'Image');
+  else throw new Error('Invalid Image Format for: ' + name + '[Image]');
 }
